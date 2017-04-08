@@ -1,5 +1,8 @@
 """
 plot.py
+
+Usage: python plot.py <data filename>
+
 I made this to display stats from our files
 COMP489
 Ed Haslam 2017
