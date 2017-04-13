@@ -26,7 +26,6 @@ fd = [x.split('  ') for x in fd]
 
 # in case this file was recorded on a windows machine, we need to strip all \r
 fd = [[x[0],x[1].split('\r')[0]] for x in fd]
-print fd
 
 # net customers in system
 customers = 0
@@ -55,20 +54,20 @@ interarrivals = \
 interarrival = sum(interarrivals)/len(interarrivals)
 
 # service time - harder to do
-stime = []
+stimes = []
 lastc = 0
 last_time = 0
 for c,t in zip(net_customers,time):
 	if c-lastc<0:
 		if last_time!=0:
 			if c>0:
-				stime.append((t-last_time)/2)
+				stimes.append((t-last_time)/2)
 			else:
-				stime.append(t-last_time)	
+				stimes.append(t-last_time)	
 		last_time = t
 	
 	lastc = c
-stime = sum(stime)/len(stime)
+stime = sum(stimes)/len(stimes)
 
 # print stats
 print "Interarrival time: %f seconds" % interarrival
@@ -85,3 +84,11 @@ time = [x/60/60 for x in time]
 # show graph		
 plt.step(time,net_customers)
 plt.show()
+
+# write interarrival/service times
+with open("interarrivals.txt",'w') as iaf:
+	iaf.write('\n'.join(str(x) for x in interarrivals))
+	
+# write interarrival/service times
+with open("service.txt",'w') as sf:
+	sf.write('\n'.join(str(x) for x in stimes))
